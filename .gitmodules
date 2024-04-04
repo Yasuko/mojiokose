@@ -1,0 +1,6 @@
+[submodule "client/src/_lib"]
+	path = client/src/_lib
+	url = https://bitbucket.org/yasukosan/ts_lib/
+[submodule "src/_lib"]
+	path = src/_lib
+	url = https://bitbucket.org/yasukosan/ts_lib/
