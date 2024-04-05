@@ -98,6 +98,9 @@ export const MediaStatus = (): JSX.Element => {
                 </div>
             </div>
             <div className="col-2">
+                <div id='ffmpeg-log'>
+
+                </div>
             </div>
         </div>
     </div>
