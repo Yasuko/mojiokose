@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["@cloudflare/workers-types"]
   },
   "include": ["src", "jest.setup.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
@@ -51,5 +52,6 @@
     "src/_lib/indentification",
     "src/_lib/Math",
     "src/_lib/obj",
+    "functions/**/*",
   ]
 }
