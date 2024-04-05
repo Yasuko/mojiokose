@@ -7,6 +7,8 @@ export const onRequestOptions: any = async () => {
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Methods': 'GET, OPTIONS',
             'Access-Control-Max-Age': '86400',
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+            'Cross-Origin-Opener-Policy': 'same-origin',
         },
     });
 };
@@ -16,5 +18,7 @@ export const onRequest: any = async (context) => {
     const response = await context.next();
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Max-Age', '86400');
+    response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+    response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
     return response;
 }

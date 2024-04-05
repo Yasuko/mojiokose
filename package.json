@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.6",
-    "@ffmpeg/ffmpeg": "^0.11.6",
+    "@ffmpeg/ffmpeg": "^0.12.5",
+    "@ffmpeg/util": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@types/react-transition-group": "^4.4.5",
     "@types/uuid": "^9.0.1",
