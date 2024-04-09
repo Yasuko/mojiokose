@@ -1,29 +1,31 @@
-# README #
+# README 
 
-This README would normally document whatever steps are necessary to get your application up and running.
+ブラウザ完結型文字起こし
+wave、mp3ファイル、マイクデバイスから直接録音、されたオーディオデータを
+WhisperAPIに投げる事で文字起こしを行う
 
-### What is this repository for? ###
+実行にはOpenAIのAPIKeyが必須です。
+画面から入力したAPIKeyはLocalstorageに保存されます。
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Sample
+[mojiokose](https://mojiokose.pages.dev/)
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+### Build
 
-### Who do I talk to? ###
+* npmパッケージのインストールを先に行って下さい
+```javascript
+npm install
+```
 
-* Repo owner or admin
-* Other community or team contact
+ffmpegのバージョン0.12.6以降をインストールした場合に
+エンコードが上手く機能しない場合があります。
+その場合は0.12.6以下で試して下さい。
+
+
+* 開発用ビルド
+```javascript
+npm run dev
+```
