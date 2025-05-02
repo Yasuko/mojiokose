@@ -10,94 +10,99 @@ import {
 
 // import Hook
 
-export const MediaStatus = (): JSX.Element => {
+export const MediaStatus = (): React.JSX.Element => {
     const dispatch = useDispatch()
     const mdi = useSelector((state: MediaDataInitialPropsInterface): MediaDataInitialInterface => {
         return state.MediaDataInitial === undefined ? initialState : state.MediaDataInitial
     });
 
     return (
-    <div className='container-fluid'>
-        <div className="row row-cols-3">
-            <div className="col-3">
+    <div className='w-svw h-svh mx-auto px-4 bg-gray-800'>
+        <div className="flex flex-wrap">
+            <div className="w-1/4">
             </div>
-            <div className="col-6">
-                <br></br>
-                <br></br>
-                <div className="row row-col-2">
-                    <div className="col-4">
-                        <h2>ファイル名</h2>
+            <div className="w-2/4">
+                <div className="my-8"></div>
+                <div className="flex mb-6">
+                    <div className="w-1/3">
+                        <h2 className="text-2xl font-bold text-gray-200">ファイル名</h2>
                     </div>
-                    <div className="col-8">
-                        <h2>{ mdi.name }</h2>
-                    </div>
-                </div>
-                <br></br>
-                <div className="row row-col-2">
-                    <div className="col-4">
-                        <h2>再生時間</h2>
-                    </div>
-                    <div className="col-8">
-                        <h2>{ playTimeFormat(mdi.playTime) }</h2>
-                        <p>※再生時間が3分を超える場合は、次の処理で分割されます</p>
+                    <div className="w-2/3">
+                        <h2 className="text-2xl font-bold text-gray-200">{ mdi.name }</h2>
                     </div>
                 </div>
-                <br></br>
-                <div className="row row-col-2">
-                    <div className="col-4">
-                        <h2>ファイルサイズ</h2>
+                <div className="flex mb-6">
+                    <div className="w-1/3">
+                        <h2 className="text-2xl font-bold text-gray-200">再生時間</h2>
                     </div>
-                    <div className="col-8">
-                        <h2>{ fileSizeFormat(mdi.fileSize) }</h2>
-                    </div>
-                </div>
-                <br></br>
-                <div className="row row-col-2">
-                    <div className="col-4">
-                        <h2>メディアタイプ</h2>
-                    </div>
-                    <div className="col-8">
-                        <h2>{ mdi.mediaType }</h2>
+                    <div className="w-2/3">
+                        <h2 className="text-2xl font-bold text-gray-200">{ playTimeFormat(mdi.playTime) }</h2>
+                        <p className="text-sm text-gray-400">※再生時間が3分を超える場合は、次の処理で分割されます</p>
                     </div>
                 </div>
-                <br></br>
-                <br></br>
-                <div className="row">
-                    <div className="col">
-                        <div className="container-fluid">
-                            <div className="row gx-0">
-                                <div className="col">
-                                    <button
-                                        className='btn btn-xl btn-primary'
-                                        onClick={() => {
-                                            dispatch({
-                                                type    : 'WhisperAction/convertAudio',
-                                                target  : 'mediaList'
-                                            })
-                                        }}
-                                    >
-                                        確認・処理継続
-                                    </button>
-                                </div>
-                                <div className="col">
-                                    <button
-                                        className='btn btn-xl btn-secondary'
-                                        onClick={() => {
-                                            dispatch({
-                                                type    : 'ShowScreen/set',
-                                                target  : 'dragFile'
-                                            })
-                                        }}
-                                    >
-                                        キャンセル・再読込
-                                    </button>
-                                </div>
+                <div className="flex mb-6">
+                    <div className="w-1/3">
+                        <h2 className="text-2xl font-bold text-gray-200">ファイルサイズ</h2>
+                    </div>
+                    <div className="w-2/3">
+                        <h2 className="text-2xl font-bold text-gray-200">{ fileSizeFormat(mdi.fileSize) }</h2>
+                    </div>
+                </div>
+                <div className="flex mb-6">
+                    <div className="w-1/3">
+                        <h2 className="text-2xl font-bold text-gray-200">メディアタイプ</h2>
+                    </div>
+                    <div className="w-2/3">
+                        <h2 className="text-2xl font-bold text-gray-200">{ mdi.mediaType }</h2>
+                    </div>
+                </div>
+                <div className="my-8"></div>
+                <div className="w-full">
+                    <div className="container mx-auto px-4">
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <button
+                                    className='
+                                        w-full h-14 py-2 px-4 bg-blue-800
+                                        text-white font-semibold rounded-lg shadow-md
+                                        hover:bg-blue-900
+                                        focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
+                                        cursor-pointer
+                                        '
+                                    onClick={() => {
+                                        dispatch({
+                                            type    : 'WhisperAction/convertAudio',
+                                            target  : 'mediaList'
+                                        })
+                                    }}
+                                >
+                                    確認・処理継続
+                                </button>
+                            </div>
+                            <div className="w-1/2">
+                                <button
+                                    className='
+                                        w-full h-14 py-2 px-4 bg-gray-500
+                                        text-white font-semibold rounded-lg shadow-md
+                                        hover:bg-gray-600
+                                        focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75
+                                        cursor-pointer
+                                        '
+                                    onClick={() => {
+                                        dispatch({
+                                            type    : 'ShowScreen/set',
+                                            target  : 'dragFile'
+                                        })
+                                    }}
+                                >
+                                    キャンセル・再読込
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="col-2">
+            <div className="w-1/4">
                 <div id='ffmpeg-log'>
 
                 </div>

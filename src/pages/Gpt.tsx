@@ -13,18 +13,13 @@ interface FaceInterface {
 
 const store = createStore()
 
-const Gpt = (p: FaceInterface): JSX.Element => {
+const Gpt = (p: FaceInterface): React.JSX.Element => {
 
     return (
         <Provider store={store}>
-            { changer(p.page) }
+            <WhisperIndex />
         </Provider>
     )
-}
-
-const changer = (p: string): JSX.Element => {
-    if (p === 'whisper') return <WhisperIndex />
-    return <WhisperIndex />
 }
 
 export default Gpt

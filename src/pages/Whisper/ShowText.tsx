@@ -1,121 +1,127 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/_store/configureStore';
 
 // import reducer
 import {
     ShowContentInterface,
     ShowContentPropsInterface,
     initialState,
-} from '../../_domain/_all/reducers/ShowContent';
+} from '@/_domain/_all/reducers/ShowContent';
 import {
     ShowTextPropsInterface,
     ShowTextInterface,
     initialState as initialTextState,
-} from '../../_domain/whisper/reducers/ShowText';
+} from '@/_domain/whisper/reducers/ShowText';
 // import Hook
 
-export const ShowText = (): JSX.Element => {
-    const dispatch = useDispatch();    
+export const ShowText = (): React.JSX.Element => {
+    const dispatch = useAppDispatch();
     // コンテンツ表示Reducer呼び出し
-    const sc = useSelector((state: ShowContentPropsInterface): ShowContentInterface => {
-        return state.ShowContent === undefined ? initialState : state.ShowContent;
-    });
+    const sc = useAppSelector<ShowContentInterface>(state => state.ShowContent)
+
     // テキスト表示Reducer呼び出し
-    const st = useSelector((state: ShowTextPropsInterface): ShowTextInterface => {
-        return state.ShowText === undefined ? initialTextState : state.ShowText;
-    });
+    const st = useAppSelector<ShowTextInterface>(state => state.ShowText)
+
+    const button_style_select = 'block px-4 py-2 text-gray-200 bg-gray-500 text-center hover:bg-gray-600 rounded'
+    const button_style_unselect = 'block px-4 py-2 text-gray-200 text-center hover:bg-gray-600 rounded'
 
     if (sc.WhisperShowText === false) return <div></div>
 
     return (
-        <div className='container-fluid whisper-show-text'>
-            <div className='whisper-show-text-content row'>
-                <div className="col-1">
-                    <ul className="whisper-title nav flex-column">
-                        <li className="nav-item">
+        <div className='absolute top-0 left-0 w-svw h-full px-4 bg-gray-800 text-white'>
+            <div className='flex h-2/3 py-20 px-10'>
+                <div className="w-1/12">
+                    <ul className="flex flex-col">
+                        <li className="py-1">
                             <a
-                                className="nav-link active"
+                                className={(st.showTab === 0) ? button_style_select : button_style_unselect}
                                 href="#"
                                 onClick={() => {
                                     dispatch({
                                         type    : 'ShowText/setShowTab',
-                                        showTab     : 0
+                                        showTab : 0
                                     })
                                 }}>
                                 Convert
                             </a>
                         </li>
-                        <li className="nav-item">
+                        <li className="py-1">
                             <a
-                                className="nav-link active"
+                                className={(st.showTab === 1) ? button_style_select : button_style_unselect}
                                 href="#"
                                 onClick={() => {
                                     dispatch({
                                         type    : 'ShowText/setShowTab',
-                                        showTab     : 1
+                                        showTab : 1
                                     })
                                 }}>
                                 Adjust1
                             </a>
                         </li>
-                        <li className="nav-item">
+                        <li className="py-1">
                             <a
-                                className="nav-link active"
+                                className={(st.showTab === 2) ? button_style_select : button_style_unselect}
                                 href="#"
                                 onClick={() => {
                                     dispatch({
                                         type    : 'ShowText/setShowTab',
-                                        showTab     : 2
+                                        showTab : 2
                                     })
                                 }}>
                                 Adjust2
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a
-                                className="nav-link active"
-                                href="#"
-                                onClick={() => {
-                                    dispatch({
-                                        type    : 'ShowText/setShowTab',
-                                        showTab     : 3
-                                    })
-                                }}>
-                                Summary
-                            </a>
-                        </li>
                     </ul>
                 </div>
-                <div className='col-11 container'>
+                <div className='w-11/12 px-4'>
                     <div
-                        className='whisper-text'
+                        className='p-10 ms-4 bg-gray-700 rounded-lg '
                         hidden={(st.showTab !== 0) ? true : false}
                     >
-                        { st.convText }
+                        {st.convText.split('。').map((sentence, index, array) => (
+                            <React.Fragment key={index}>
+                                {sentence}
+                                {index < array.length - 1 && (
+                                    <>。<br /></>
+                                )}
+                            </React.Fragment>
+                        ))}
                     </div>
                     <div
-                        className='whisper-text'
+                        className='p-10 ms-4 bg-gray-700 rounded-lg '
                         hidden={(st.showTab !== 1) ? true : false}
                     >
-                        <pre>{ st.adjustText1 }</pre>
+                        {st.adjustText1.split('。').map((sentence, index, array) => (
+                            <React.Fragment key={index}>
+                                {sentence}
+                                {index < array.length - 1 && (
+                                    <>。<br /></>
+                                )}
+                            </React.Fragment>
+                        ))}
                     </div>
                     <div
-                        className='whisper-text'
+                        className='p-10 ms-4 bg-gray-700 rounded-lg '
                         hidden={(st.showTab !== 2) ? true : false}
                     >
-                        { st.adjustText2 }
-                    </div>
-                    <div
-                        className='whisper-text'
-                        hidden={(st.showTab !== 3) ? true : false}
-                    >
-                        <pre>{ st.summaryText }</pre>
+                        {st.adjustText2.split('。').map((sentence, index, array) => (
+                            <React.Fragment key={index}>
+                                {sentence}
+                                {index < array.length - 1 && (
+                                    <>。<br /></>
+                                )}
+                            </React.Fragment>
+                        ))}
                     </div>
                 </div>
 
             </div>
             <div
-                className='btn btn-xl btn-primary whisper-show-text-button'
+                className='
+                    w-[120px] py-2 px-4 ms-10 rounded-lg 
+                    bg-blue-600 hover:bg-blue-700
+                    text-white text-center font-bold
+                    cursor-pointer whisper-show-text-button'
                 onClick={() => {
                 dispatch({
                     type    : 'ShowContent/whisperShowText',
@@ -127,4 +133,4 @@ export const ShowText = (): JSX.Element => {
     )
 };
 
-export default ShowText;
+export default ShowText

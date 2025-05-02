@@ -1,87 +1,80 @@
-import React from 'react';
-import { connect, useSelector } from 'react-redux';
-import { Transition } from 'react-transition-group';
-// import 'bootstrap/dist/css/bootstrap.css';
-import './loading.css';
+import React, { useEffect, useState } from 'react'
 
 import {
-    loadingAnimationPropsInterface,
-    initialState,
-    loadingAnimationInterface
-} from './loading.animation.reducer';
+    useAppSelector,
+} from '@/_store/configureStore'
 
-const mapStateToProps = (state: any) => {
-    return state;
-};
+import {
+    loadingAnimationInterface,
+} from './loading.animation.reducer'
 
-const transitionStyles: any = {
-    entering: {
-        transition: 'all .20s ease',
-        display: 'block',
-        opacity: 1
-    },
-    entered: {
-        transition: '',
-        opacity: 1
-    },
-    exiting: {
-        transition: 'all .20s ease',
-        opacity: 0
-    },
-    exited: {
-        transition: '',
-        display: 'none'
-    }
-};
-
-const defaultStyle = {
-    transition: 'opacity 3000ms ease-in-out',
-    display: 'block',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    backgroundColor: 'rgba(150, 150, 150, 0.7)',
-    zIndex: 10000000,
-    opacity: 1
-};
-
-const LoadingAnimation = (state: loadingAnimationPropsInterface,) =>
-{
-    const show = useSelector((state: loadingAnimationPropsInterface): loadingAnimationInterface => {
-        return state.loadingAnimation === undefined ? initialState : state.loadingAnimation
-    })
-
-    return (
-        <Transition in={show.show} timeout={550}>
-            {(state) => (
-                <div
-                    style={{
-                        ...defaultStyle,
-                        ...transitionStyles[state]
-                    }}
-                    id="LoadingAnimation"
-                >
-                    <div className="mx-auto" style={{ width: '500px' }}>
-                        <div style={{ marginTop: '50%' }}>
-                            <div className="container">
-                                <div
-                                    className="spinner-grow text-dark loading-icon"
-                                    role="status"
-                                ></div>
-                            </div>
-                            <div className="container">
-                                <h3 className="blinking loading-text">
-                                    {show.message}
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </Transition>
-    );
+const dotColors = {
+    light: 'bg-blue-500',
+    dark: 'bg-blue-300',
 }
 
-export default LoadingAnimation;
+const LoadingAnimation = () => {
+
+    const loadingAnimation = useAppSelector<loadingAnimationInterface>((state) => state.loadingAnimation)
+
+    const isDark = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const dotColor = isDark ? dotColors.dark : dotColors.light;
+
+    // 点滅インデックス管理
+    const [activeIndex, setActiveIndex] = useState(0);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex((prev) => (prev + 1) % 5);
+        }, 200);
+        return () => clearInterval(interval);
+    }, []);
+
+    if (!loadingAnimation.show) return null
+
+    return (
+        <div className={`fixed inset-0 w-screen h-screen flex items-center justify-center z-[9999] ${isDark ? 'bg-[#181a1b]' : 'bg-white'}`}>
+            <div className="flex flex-col items-center w-full max-w-full">
+                {/* 点滅するテキスト */}
+                <div
+                    className={`font-bold mb-10 text-[clamp(2rem,5vw,3.5rem)] tracking-wider ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
+                    style={{ animation: 'blink 1.2s infinite alternate' }}
+                >
+                    Loading....
+                </div>
+                {/* 丸5つのアニメーション */}
+                <div className="flex gap-5 justify-center items-center">
+                    {[0,1,2,3,4].map(i => (
+                        <span
+                            key={i}
+                            className={`rounded-full ${dotColor}`}
+                            style={{
+                                width: 'clamp(1.1rem,2vw,1.8rem)',
+                                height: 'clamp(1.1rem,2vw,1.8rem)',
+                                opacity: activeIndex === i ? 1 : 0.3,
+                                transition: 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)', // ease-out風
+                                boxShadow: activeIndex === i
+                                    ? '0 0 18px 6px rgba(59,130,246,0.45)' // アクティブ時に青系ぼかし
+                                    : '0 0 8px 2px rgba(59,130,246,0.18)', // 非アクティブ時も少しぼかし
+                                filter: 'blur(0.5px)', // さらに微妙なぼかし
+                            }}
+                        />
+                    ))}
+                </div>
+                <style>{`
+                    @keyframes blink {
+                        0% { opacity: 0.2; }
+                        80% { opacity: 1; }
+                        100% { opacity: 0.7; }
+                    }
+                    @media (max-width: 600px) {
+                        .font-bold.mb-10 {
+                            font-size: clamp(1.2rem,8vw,2.2rem);
+                        }
+                    }
+                `}</style>
+            </div>
+        </div>
+    )
+}
+
+export default LoadingAnimation

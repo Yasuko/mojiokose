@@ -47,28 +47,13 @@ const slice = createSlice({
             });
         },
         setTransitionText: (state: any, action: any) => {
-            const re = duplicator(state.mediaData)
-            re[action.key].convText = action.convText
-
-            return Object.assign({}, state, {
-                mediaData: re
-            });
+            state.mediaData[action.key].convText = action.convText;
         },
         setAdjustText: (state: any, action: any) => {
-            const re = duplicator(state.mediaData)
-            re[action.key].adjustText1 = action.adjustText1
-
-            return Object.assign({}, state, {
-                mediaData: re
-            });
+            state.mediaData[action.key].adjustText1 = action.adjustText1;
         },
         setSummaryText: (state: any, action: any) => {
-            const re = duplicator(state.mediaData)
-            re[action.key].summaryText = action.summaryText
-
-            return Object.assign({}, state, {
-                mediaData: re
-            });
+            state.mediaData[action.key].summaryText = action.summaryText;
         },
         reset: (state: any, action: any) => {
             return initialState;

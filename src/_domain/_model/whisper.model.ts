@@ -21,7 +21,10 @@ export class WhisperModel {
     public async callWhisper(audio: string): Promise<any>
     {
         await this.Whisper?.setAudioFile(audio)
-        await this.Whisper?.do()
-        return this.Whisper?.getResult()
+
+        if (await this.Whisper?.do() === true) {
+            return this.Whisper?.getResult()
+        }
+        return false
     }
 }

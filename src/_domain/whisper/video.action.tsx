@@ -63,8 +63,6 @@ export function* camera(val: any): any {
 export function* doneCamera(val: any): any {
     yield VideoHelper.call().stop()
     const cams = yield VideoHelper.call().getMoves()
-    console.log(cams)
-
 
     yield put({
         type        : 'WhisperOption/setRecVideo',

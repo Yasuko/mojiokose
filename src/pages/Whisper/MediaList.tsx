@@ -9,7 +9,7 @@ import {
 } from '../../_domain/whisper/reducers/MediaDataMolded'
 
 
-export const MediaList = (): JSX.Element => {
+export const MediaList = (): React.JSX.Element => {
     const dispatch = useDispatch();
 
     const mdm = useSelector((state: MediaDataMoldedPropsInterface): MediaDataMoldedInterface => {
@@ -24,17 +24,20 @@ export const MediaList = (): JSX.Element => {
     return buildList(mdm, dispatch)
 }
 
-const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): JSX.Element => {
-    const list = mdm.mediaData.map((val, key): JSX.Element => {
+const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): React.JSX.Element => {
+    const list = mdm.mediaData.map((val, key): React.JSX.Element => {
         return (
         <div
             key={key}
-            className='container-fluid whisper-rec-list'>
+            className='
+                w-full px-4 py-2
+                bg-gray-700
+                rounded-lg mb-4
+                '>
 
-            <div className='row justify-content-around'>
-                <div className='col-1'></div>
+            <div className='flex justify-center'>
                 <div
-                    className='col-4 whisper-rec-list-name'
+                    className='w-4/12 cursor-pointer text-gray-200 hover:text-gray-400'
                     onClick={() => {
                         dispatch({
                             type    : 'ShowContent/whisperShowText',
@@ -50,39 +53,59 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): JSX.Element =>
                     }}>
                     {val.name}
                 </div>
-                <div className='col-2 whisper-rec-list-time'>
-                        { Math.floor(val.playTime * 100) / 100} sec
+                <div className='w-1/12 whisper-rec-list-time text-gray-200'>
+                    { Math.floor(val.playTime * 100) / 100} sec
                 </div>
-                <div className='col-2 whisper-rec-control whisper-rec-list-button'>
-                    <div
-                        className='btn btn-sm btn-primary'
+                <div className='w-3/12 flex space-x-1 '>
+                    <button
+                        className='
+                            px-4 py-1 rounded 
+                            text-xs text-white
+                            bg-blue-500 hover:bg-blue-600
+                            cursor-pointer
+                            '
                         onClick={() => {
                             dispatch({
                                 type    : 'WhisperAction/convertText',
-                                key     : key
+                                payload : key
                             })
                         }}
-                    >文字起</div>
-                    <div
-                        className='btn btn-sm btn-primary'
+                    >文字起</button>
+                    <button
+                        className='
+                            px-4 py-1 rounded
+                            text-xs text-white
+                            bg-blue-500 hover:bg-blue-600
+                            cursor-pointer
+                            '
                         onClick={() => {
                             dispatch({
                                 type    : 'WhisperAction/convertDocument',
                                 key     : key
                             })
                         }}
-                    >整形</div>
-                    <div
-                        className='btn btn-sm btn-primary'
+                    >整形</button>
+                    <button
+                        className='
+                            px-4 py-1 rounded
+                            text-xs text-white
+                            bg-blue-500 hover:bg-blue-600
+                            cursor-pointer
+                            '
                         onClick={() => {
                             dispatch({
                                 type    : 'WhisperAction/convertSummary',
                                 key     : key
                             })
                         }}
-                    >要約</div>
-                    <div
-                        className='btn btn-sm btn-primary'
+                    >要約</button>
+                    <button
+                        className='
+                            px-4 py-1 rounded
+                            text-xs text-white
+                            bg-blue-500 hover:bg-blue-600
+                            cursor-pointer
+                        '
                         onClick={() => {
                             dispatch({
                                 type    : 'AudioAction/download',
@@ -90,29 +113,24 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): JSX.Element =>
                                 key     : key
                             })
                         }}
-                        >DL</div>
+                        >DL</button>
                 </div>
             </div>
-            <div className='row justify-content-start'>
-                <div className='col-2'></div>
-                <div className='col-6'>
-                    {txtCheck(val.convText) ? grayBox('txt') : grayBox('txt', true)}
-                    {txtCheck(val.adjustText1) ? grayBox('adj1') : grayBox('adj1', true)}
-                    {txtCheck(val.adjustText2) ? grayBox('adj2') : grayBox('adj2', true)}
-                    {txtCheck(val.summaryText) ? grayBox('sum') : grayBox('sum', true)}
-
-                </div>
-                <div className='col-2'></div>
+            <div className='flex justify-start'>
+                <div className='w-2/12 '></div>
+                {txtCheck(val.convText) ? grayBox('txt') : grayBox('txt', true)}
+                {txtCheck(val.adjustText1) ? grayBox('adj1') : grayBox('adj1', true)}
+                {txtCheck(val.adjustText2) ? grayBox('adj2') : grayBox('adj2', true)}
             </div>
         </div>
         );
     })
     return (
-        <div className='whisper-rec-box'>
+        <div className='w-svw h-svh mx-auto px-4 bg-gray-800'>
             { list }
-            <div className='whisper-convert-button'>
+            <div className='flex justify-center mt-4'>
                 <button
-                    className='btn btn-xl btn-primary'
+                    className='px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600'
                     onClick={() => {
                         dispatch({
                             type    : 'WhisperAction/allProcess',
@@ -127,27 +145,11 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): JSX.Element =>
 }
 
 const grayBox = (text: string, toggle: boolean = false) => {
-    const color = toggle ? 'green' : 'gray'
+    const color = toggle ? 'bg-green-200' : 'bg-gray-200'
 
     return (
-        <div className={'whisper-rec-' + color +'-box whisper-rec-result-box'}>{text}</div>
+        <div className={`${color} px-2 py-1 m-1 rounded text-center`}>{text}</div>
     )
-}
-
-const jobChack = (md: MediaTypes, job: number): boolean => {
-    let _job = 0
-    _job = (md.convText === undefined || md.convText === '') ? _job - 1 : _job
-    if (job === 1) return (_job + job) === 1 ? true : false
-
-    _job = (md.adjustText1 === undefined || md.adjustText1 === '') ? _job - 1 : _job
-    if (job === 2) return (_job + job) === 2 ? true : false
-
-    _job = (md.adjustText2 === undefined || md.adjustText2 === '') ? _job - 1 : _job
-    if (job === 3) return (_job + job) === 3 ? true : false
-
-    _job = (md.summaryText === undefined || md.summaryText === '') ? _job - 1 : _job
-    if (job === 4) return (_job + job) === 4 ? true : false
-    return (_job + job) === -1 ? true : false
 }
 
 const txtCheck = ( text: string | undefined ): boolean => {

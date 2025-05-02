@@ -1,31 +1,30 @@
 import React, { Dispatch } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '@/_store/configureStore'
 
 // import reducer
 import {
-    WhisperOptionPropsInterface,
     WhisperOptionInterface,
-    initialState
-} from '../../_domain/whisper/reducers/WhisperOption'
+} from '@/_domain/whisper/reducers/WhisperOption'
 
 // import Component
 
 // import Hook
 import VideoHook from '../_hook/video.hook'
 
-export const Recorder = (): JSX.Element => {
-    const dispatch = useDispatch();
+export const Recorder = (): React.JSX.Element => {
+    const dispatch = useAppDispatch();
+    const wf = useAppSelector<WhisperOptionInterface>(state => state.WhisperOption)
+
     VideoHook({dispatch: 'WhisperAction/hook'})
-    const wf = useSelector((state: WhisperOptionPropsInterface): WhisperOptionInterface => {
-        return state.WhisperOption === undefined ? initialState : state.WhisperOption
-    });
+
     return (
-    <div className='container-fluid'>
-        <div className="row">
-            <div className="col-12">
+    <div className='w-full px-4'>
+        <div className="flex flex-wrap">
+            <div className="w-full flex flex-row p-4">
                 <button
                     id="File1b"
-                    className='btn btn-sm btn-primary whisper-record-button'
+                    className='
+                        px-2 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 mr-2'
                     disabled={wf.recVideo ? true : false}
                     onClick={() => {
                         dispatch({
@@ -37,7 +36,8 @@ export const Recorder = (): JSX.Element => {
                 </button>
                 <button
                     id="File1b"
-                    className='btn btn-sm btn-secondary whisper-record-button'
+                    className='
+                        px-2 py-1 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-600 mr-2'
                     disabled={wf.recVideo ? true : false}
                     onClick={() => {
                         dispatch({
@@ -48,19 +48,21 @@ export const Recorder = (): JSX.Element => {
                     Stop
                 </button>
                 <div
-                    className='whisper-record-time container'
+                    className='inline-block p-2 text-center text-gray-200 w-8 mx-2'
                     id='audio-timer'>
                     0
                 </div>
                 <audio id="whisper"></audio>
                 <canvas
                     id="analyser_whisper"
-                    className='whisper-visualise'></canvas>
+                    className='w-46 h-6 border border-2 my-2'
+                    ></canvas>
             </div>
-            <div className='col-12'>
+            <div className='w-full flex mt-1 p-4'>
                 <button
                     id="File1b"
-                    className='btn btn-sm btn-primary whisper-record-button'
+                    className='
+                        px-2 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 mr-2'
                     disabled={wf.recAudio ? true : false}
                     onClick={() => {
                         dispatch({
@@ -72,7 +74,7 @@ export const Recorder = (): JSX.Element => {
                 </button>
                 <button
                     id="File1b"
-                    className='btn btn-sm btn-secondary whisper-record-button'
+                    className='px-2 py-1 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-600 mr-2'
                     disabled={wf.recAudio ? true : false}
                     onClick={() => {
                         dispatch({
@@ -83,18 +85,17 @@ export const Recorder = (): JSX.Element => {
                     Stop
                 </button>
                 <div
-                    className='whisper-record-time'
+                    className='inline-block p-2 text-center text-gray-200'
                     id='video-timer'>
                     0
                 </div>
                 <video
                     id="whisper-cam"
-                    style={{width: '50px'}}></video>
+                    className='w-12'></video>
             </div>
         </div>
     </div>
     );
 };
 
-
-export default Recorder;
+export default Recorder

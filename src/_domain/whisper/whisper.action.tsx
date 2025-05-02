@@ -27,6 +27,7 @@ import {
     getShapeFunctionCall,
     getSummaryFunctionCall
 } from './helper/function_call.helper'
+import { PayloadAction } from '@reduxjs/toolkit'
 
 const Token = (state: TokenFormPropsInterface) => state.TokenForm
 const MediaInitial = (state: MediaDataInitialPropsInterface) => state.MediaDataInitial
@@ -119,31 +120,26 @@ function* convertAudio(val: any): any {
  * 文字起こし
  * @param val 
  */
-function* convertText(val: any): any {
+function* convertText(val: PayloadAction<number>): any {
     yield loadingShow('Now 文字起こし開始 Now')
 
     const mm: MediaDataMoldedInterface = yield select(MediaMolded)
+    console.log(mm)
     const k: TokenFormInterface = yield select(Token)
 
-    const r = yield WhisperModel.call(k.token).callWhisper(mm.mediaData[val.key].mediaData)
+    const r = yield WhisperModel.call(k.token).callWhisper(mm.mediaData[val.payload].mediaData)
     console.log(r)
+    console.log(val)
 
     yield put({
         type    : 'MediaDataMolded/setTransitionText',
         convText: r,
-        key     : val.key,
+        key     : val.payload,
     })
-
+    const mm2: MediaDataMoldedInterface = yield select(MediaMolded)
+    console.log(mm2)
     //yield updateShowText(val.key)
     yield loadingHide()
-
-    if (val.option === true) {
-        yield put({
-            type    : 'WhisperAction/convertDocument',
-            key     : val.key,
-            option  : val.option,
-        })
-    }
 }
 
 /**
@@ -153,7 +149,6 @@ function* convertText(val: any): any {
 function* convertDocument(val: any): any {
     yield loadingShow('Now 文書整形開始 Now')
 
-    const func = getShapeFunctionCall()
     const mm: MediaDataMoldedInterface = yield select(MediaMolded)
     const k: TokenFormInterface = yield select(Token)
 
@@ -163,7 +158,6 @@ function* convertDocument(val: any): any {
                 mm.mediaData[val.key].convText,
                 {
                     ...initialOCR.options,
-                    ...func
                 }
             )
         
@@ -188,7 +182,6 @@ function* convertDocument(val: any): any {
 function* convertSummary(val: any): any {
     yield loadingShow('Now 文書要約開始 Now')
 
-    const func = getSummaryFunctionCall()
     const mm: MediaDataMoldedInterface = yield select(MediaMolded)
     const k: TokenFormInterface = yield select(Token)
 
@@ -198,7 +191,6 @@ function* convertSummary(val: any): any {
                 mm.mediaData[val.key].adjustText1,
                 {
                     ...initialOCR.options,
-                    ...func
                 }
             )
         

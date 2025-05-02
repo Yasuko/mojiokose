@@ -1,11 +1,11 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '@/_store/configureStore'
 
 // import reducer
 import {
-    ShowScreenPropsInterface, ShowScreenInterface,
-    initialState
-} from '../../_domain/whisper/reducers/ShowScreen'
+    ShowScreenInterface,
+    ShowScreenPropsInterface,
+} from '@/_domain/whisper/reducers/ShowScreen'
 
 // import component
 import DragFile from './DragFile'
@@ -14,18 +14,17 @@ import MediaList from './MediaList'
 import InputToken from '../token/InputToken'
 
 
-export const Screen = (): JSX.Element => {
-    const ss = useSelector((state: ShowScreenPropsInterface): ShowScreenInterface => {
-        return state.ShowScreen === undefined ? initialState : state.ShowScreen
-    })
+export const Screen = (): React.JSX.Element => {
+    const ss = useAppSelector<ShowScreenInterface>(state => state.ShowScreen)
+
     return (
-        <div>
+        <>
             { checkScreen(ss) }
-        </div>
+        </>
     )
 }
 
-const checkScreen = (ss: ShowScreenInterface): JSX.Element => {
+const checkScreen = (ss: ShowScreenInterface): React.JSX.Element => {
     if (ss.target === 'dragFile') {
         return <DragFile />
     }
@@ -40,7 +39,7 @@ const checkScreen = (ss: ShowScreenInterface): JSX.Element => {
         return <InputToken />
     }
 
-    return <div></div>
+    return <DragFile />
 }
 
 export default Screen

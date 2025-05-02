@@ -24,3 +24,15 @@ export function* loadingHide(): any {
         message     : ''
     })
 }
+
+
+export function* toasterShow(
+    message: string,
+    type: 'error' | 'info' | 'success' | 'warning' = 'info'
+): any {
+    yield put({
+        type        : 'toastAnimation/setShow',
+        show        : true,
+        message     : message
+    })
+}

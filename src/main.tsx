@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Gpt from './pages/Gpt'
 import './index.css'
-import './styles/app.css'
-import './styles/search.css'
-import './styles/whisper.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>

@@ -1,5 +1,5 @@
-import React, { Dispatch, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '@/_store/configureStore';
 
 // import reducer
 
@@ -7,10 +7,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import Recorder from './Recorder'
 
 // import Hook
-import VideoHook from '../_hook/video.hook';
+import VideoHook from '@/pages/_hook/video.hook';
 
-export const DragFile = (): JSX.Element => {
-    const dispatch = useDispatch();
+export const DragFile = (): React.JSX.Element => {
+    const dispatch = useAppDispatch();
     VideoHook({dispatch: 'WhisperAction/hook'})
 
     useEffect(() => {
@@ -21,28 +21,36 @@ export const DragFile = (): JSX.Element => {
     }, [])
 
     return (
-    <div className='container-fluid'>
-        <div className="row row-cols-3">
-            <div className="form-group col">
-            </div>
-            <div className="form-group col">
+    <div
+        className='
+            w-svw h-svh mx-auto px-4
+            flex flex-col items-center justify-center
+            bg-gray-800
+            '>
+
+            <div className="">
                 <div
                     id="File1b"
-                    className="drag-area center"
+                    className="
+                        border-2 border-gray-300 bg-gray-200
+                        rounded-lg p-6
+                        flex flex-col items-center justify-center
+                        hover:bg-gray-400
+                        transition duration-300 ease-in-out
+                        cursor-pointer
+                        w-full h-48
+                        "
                     onDragOver={(e) => onDragStart(e, dispatch)}
                     onDrop={(e) => onDragEnd(e, dispatch)}
                 >
-                    <h3>Drag Area</h3>
-                    <h6>Audio File</h6>
-                    <h6>Video File</h6>
+                    <h3 className="text-xl font-bold mb-2">Drag Area</h3>
+                    <h6 className="text-sm text-gray-600 mb-1">Audio File</h6>
+                    <h6 className="text-sm text-gray-600">Video File</h6>
                 </div>
                 <div>
                     <Recorder />
                 </div>
             </div>
-            <div className="form-group col">
-            </div>
-        </div>
     </div>
     )
 }
