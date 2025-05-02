@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 // import reducer
@@ -12,7 +12,7 @@ import {
 
 // import Hook
 
-export const InputToken = (): JSX.Element => {
+export const InputToken = (): React.JSX.Element => {
     const dispatch = useDispatch()
     const t = useSelector((state: TokenFormPropsInterface): TokenFormInterface => {
         return state.TokenForm === undefined ? initialState : state.TokenForm

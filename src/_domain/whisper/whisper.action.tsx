@@ -23,10 +23,7 @@ import {
 
 import { initialOCR } from './reducers/__type.ocr'
 import { EncodeHelper } from './helper/encode.helper'
-import {
-    getShapeFunctionCall,
-    getSummaryFunctionCall
-} from './helper/function_call.helper'
+
 import { PayloadAction } from '@reduxjs/toolkit'
 
 const Token = (state: TokenFormPropsInterface) => state.TokenForm

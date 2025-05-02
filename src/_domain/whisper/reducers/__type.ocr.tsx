@@ -1,4 +1,4 @@
-import { ChatOptions } from '../../../_lib/gpt/_helper/__type.gpt'
+import { ChatOptionsType } from '../../../_lib/gpt/_helper/chat.helper'
 
 /**
  * チャットの型
@@ -21,7 +21,7 @@ export type Chat = {
  * 
  */
 export type OCRType = {
-    options     : ChatOptions
+    options     : ChatOptionsType
     ocr         : string
     ocr_result  : string
 }
@@ -74,18 +74,13 @@ const functions = [
  */
 export const initialOCR: OCRType = {
     options     : {
-        model       : 'gpt-4-0125-preview',
-        messages    : [{
-            role    : 'user',
-            content : "What is the weather like in Boston?",
-        }],
-        functions    : functions,
-        function_call: {name: 'invoice_information_extraction'},
-        temperature : 0,
+        model       : 'o3-mini',
+        messages    : [],
+        temperature : 1,
         top_p       : 1,
         n           : 1,
         stream      : false,
-        max_tokens  : 2000,
+        max_completion_tokens : 4000,
         presence_penalty: 0,
         frequency_penalty: 0,
     },

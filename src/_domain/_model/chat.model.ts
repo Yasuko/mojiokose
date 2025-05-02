@@ -37,7 +37,13 @@ export class ChatModel {
     ): Promise<ChatReturn> {
         ChatService.call()
             .setOptions(options)
-            .setMessage(text)
+            .setMessage([{
+                role: 'user',
+                content: [{
+                    type: 'text',
+                    text: text,
+                }],
+            }])
         await ChatService.call().do()
         return ChatService.call().getResult()
     }
