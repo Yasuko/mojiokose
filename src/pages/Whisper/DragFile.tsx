@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/_store/configureStore';
+import { useAppDispatch } from '@/_store/configureStore';
 
 // import reducer
 

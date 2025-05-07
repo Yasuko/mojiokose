@@ -28,7 +28,6 @@ export const RootAudioAction = [
     // 録音ファイルを分割
     takeEvery('AudioAction/split', split),
     // 録音ファイルをダウンロード
-    takeEvery('AudioAction/download', download),
 ];
 
 /**
@@ -94,15 +93,6 @@ export function* delRecorder(val: any): any
     })
 }
 
-/**
- * オーディオデータのダウンロード
- * @param val any
- * @return any
- */
-export function* download(val: any): any
-{
-    EncodeHelper.call().download(val.file.rec, val.file.extension, val.file.name);
-}
 
 /**
  * コーデック変換

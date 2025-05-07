@@ -39,7 +39,7 @@ const LoadingAnimation = () => {
                     className={`font-bold mb-10 text-[clamp(2rem,5vw,3.5rem)] tracking-wider ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
                     style={{ animation: 'blink 1.2s infinite alternate' }}
                 >
-                    Loading....
+                    { loadingAnimation.message === '' ? 'Loading....' : loadingAnimation.message }
                 </div>
                 {/* 丸5つのアニメーション */}
                 <div className="flex gap-5 justify-center items-center">

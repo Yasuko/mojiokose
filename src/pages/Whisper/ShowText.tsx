@@ -4,13 +4,9 @@ import { useAppDispatch, useAppSelector } from '@/_store/configureStore';
 // import reducer
 import {
     ShowContentInterface,
-    ShowContentPropsInterface,
-    initialState,
 } from '@/_domain/_all/reducers/ShowContent';
 import {
-    ShowTextPropsInterface,
     ShowTextInterface,
-    initialState as initialTextState,
 } from '@/_domain/whisper/reducers/ShowText';
 // import Hook
 
@@ -55,7 +51,7 @@ export const ShowText = (): React.JSX.Element => {
                                         showTab : 1
                                     })
                                 }}>
-                                Adjust1
+                                Shape
                             </a>
                         </li>
                         <li className="py-1">
@@ -68,16 +64,30 @@ export const ShowText = (): React.JSX.Element => {
                                         showTab : 2
                                     })
                                 }}>
-                                Adjust2
+                                Digest
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div className='w-11/12 px-4'>
                     <div
-                        className='p-10 ms-4 bg-gray-700 rounded-lg '
+                        className='p-10 ms-4 bg-gray-700 rounded-lg relative'
                         hidden={(st.showTab !== 0) ? true : false}
                     >
+                        <button 
+                            className='absolute top-2 right-2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm'
+                            onClick={() => {
+                                navigator.clipboard.writeText(st.convText)
+                                    .then(() => {
+                                        alert('テキストをコピーしました');
+                                    })
+                                    .catch(err => {
+                                        console.error('コピーに失敗しました: ', err);
+                                    });
+                            }}
+                        >
+                            コピー
+                        </button>
                         {st.convText.split('。').map((sentence, index, array) => (
                             <React.Fragment key={index}>
                                 {sentence}
@@ -88,9 +98,23 @@ export const ShowText = (): React.JSX.Element => {
                         ))}
                     </div>
                     <div
-                        className='p-10 ms-4 bg-gray-700 rounded-lg '
+                        className='p-10 ms-4 bg-gray-700 rounded-lg relative'
                         hidden={(st.showTab !== 1) ? true : false}
                     >
+                        <button 
+                            className='absolute top-2 right-2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm'
+                            onClick={() => {
+                                navigator.clipboard.writeText(st.adjustText1)
+                                    .then(() => {
+                                        alert('テキストをコピーしました');
+                                    })
+                                    .catch(err => {
+                                        console.error('コピーに失敗しました: ', err);
+                                    });
+                            }}
+                        >
+                            コピー
+                        </button>
                         {st.adjustText1.split('。').map((sentence, index, array) => (
                             <React.Fragment key={index}>
                                 {sentence}
@@ -101,9 +125,23 @@ export const ShowText = (): React.JSX.Element => {
                         ))}
                     </div>
                     <div
-                        className='p-10 ms-4 bg-gray-700 rounded-lg '
+                        className='p-10 ms-4 bg-gray-700 rounded-lg relative'
                         hidden={(st.showTab !== 2) ? true : false}
                     >
+                        <button 
+                            className='absolute top-2 right-2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm'
+                            onClick={() => {
+                                navigator.clipboard.writeText(st.adjustText2)
+                                    .then(() => {
+                                        alert('テキストをコピーしました');
+                                    })
+                                    .catch(err => {
+                                        console.error('コピーに失敗しました: ', err);
+                                    });
+                            }}
+                        >
+                            コピー
+                        </button>
                         {st.adjustText2.split('。').map((sentence, index, array) => (
                             <React.Fragment key={index}>
                                 {sentence}

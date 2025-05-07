@@ -2,6 +2,7 @@ import { put, select, takeEvery } from 'redux-saga/effects'
 
 // import helper
 import { FileHelper } from './helper/file.helper'
+import { EncodeHelper } from './helper/encode.helper';
 import { loadingShow, loadingHide } from '../animation/animation'
 
 // import model
@@ -22,7 +23,7 @@ import {
 } from '../token/reducers/TokenForm'
 
 import { initialOCR } from './reducers/__type.ocr'
-import { EncodeHelper } from './helper/encode.helper'
+
 
 import { PayloadAction } from '@reduxjs/toolkit'
 
@@ -50,6 +51,9 @@ export const RootWhisperAction = [
     takeEvery('WhisperAction/convertSummary', convertSummary),
 
     takeEvery('WhisperAction/allProcess', allProcess),
+
+    // 録音ファイルダウンロード
+    takeEvery('WhisperAction/download', download),
 
 ]
 
@@ -223,3 +227,11 @@ function* allProcess(val: any): any {
     
 }
 
+function* download(val: PayloadAction<number>): any {
+    const mm: MediaDataMoldedInterface = yield select(MediaMolded)
+    yield EncodeHelper.call().download(
+        mm.mediaData[val.payload].mediaData,
+        mm.mediaData[val.payload].name,
+        mm.mediaData[val.payload].extension
+    )
+}

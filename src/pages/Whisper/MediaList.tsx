@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     MediaDataMoldedPropsInterface, MediaDataMoldedInterface,
     initialState,
-    MediaTypes
 } from '../../_domain/whisper/reducers/MediaDataMolded'
 
 
@@ -31,8 +30,8 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): React.JSX.Elem
             key={key}
             className='
                 w-full px-4 py-2
-                bg-gray-700
-                rounded-lg mb-4
+                border-b-2 border-gray-600
+                mb-4
                 '>
 
             <div className='flex justify-center'>
@@ -108,9 +107,8 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): React.JSX.Elem
                         '
                         onClick={() => {
                             dispatch({
-                                type    : 'AudioAction/download',
-                                file    : val,
-                                key     : key
+                                type     : 'WhisperAction/download',
+                                payload  : key
                             })
                         }}
                         >DL</button>
@@ -118,9 +116,9 @@ const buildList = (mdm: MediaDataMoldedInterface, dispatch: any): React.JSX.Elem
             </div>
             <div className='flex justify-start'>
                 <div className='w-2/12 '></div>
-                {txtCheck(val.convText) ? grayBox('txt') : grayBox('txt', true)}
-                {txtCheck(val.adjustText1) ? grayBox('adj1') : grayBox('adj1', true)}
-                {txtCheck(val.adjustText2) ? grayBox('adj2') : grayBox('adj2', true)}
+                {txtCheck(val.convText) ? grayBox('text') : grayBox('text', true)}
+                {txtCheck(val.adjustText1) ? grayBox('shape') : grayBox('shape', true)}
+                {txtCheck(val.adjustText2) ? grayBox('Digest') : grayBox('Digest', true)}
             </div>
         </div>
         );
@@ -148,7 +146,7 @@ const grayBox = (text: string, toggle: boolean = false) => {
     const color = toggle ? 'bg-green-200' : 'bg-gray-200'
 
     return (
-        <div className={`${color} px-2 py-1 m-1 rounded text-center`}>{text}</div>
+        <div className={`${color} px-3 py-0 m-1 rounded text-center text-sm `}>{text}</div>
     )
 }
 

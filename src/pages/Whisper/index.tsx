@@ -1,5 +1,3 @@
-import React from 'react-redux'
-
 // import Component
 import Header from '../Header'
 import Screen from './Screen'
