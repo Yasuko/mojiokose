@@ -23,10 +23,13 @@ export const createStore = () => {
                         'WhisperAction/DragStart',
                         'WhisperAction/DragEnd',
                         'MediaDataMolded/setMediaData',
+                        'MediaDataInitial/setMedia',
                     ],
                     ignoredActionPaths: [],
                     ignoredPaths: [
                         'MediaDataMolded.mediaData',
+                        'MediaDataInitial.mediaData',
+                        'mediaData',
                     ]
                 }
             }
