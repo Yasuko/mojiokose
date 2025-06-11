@@ -37,7 +37,7 @@ export const MediaStatus = (): React.JSX.Element => {
                     </div>
                     <div className="w-2/3">
                         <h2 className="text-2xl font-bold text-gray-200">{ playTimeFormat(mdi.playTime) }</h2>
-                        <p className="text-sm text-gray-400">※再生時間が3分を超える場合は、次の処理で分割されます</p>
+                        <p className="text-sm text-gray-400">※再生時間が10分を超える場合は、次の処理で分割されます</p>
                     </div>
                 </div>
                 <div className="flex mb-6">

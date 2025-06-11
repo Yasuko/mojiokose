@@ -66,16 +66,17 @@ export class EncodeHelper {
      */
     public async split(
         time: number,
-        type: 'base64' | 'file' = 'base64'
+        type: 'base64' | 'file' = 'base64',
+        splitTime: number = 600
     ): Promise<MediaTypes[]> {
         const files: MediaTypes[] = [];
         let stime: number = 0;
         let etime: number = 0;
-        
-        const count = Math.floor(time / 180) + 1;
+
+        const count = Math.floor(time / splitTime) + 1;
         for (let i = 0 ; i <  count; i++) {
-            stime = i * 180
-            etime = (i + 1) * 180
+            stime = i * splitTime
+            etime = (i + 1) * splitTime
 
             if (time < etime)
                 etime = time

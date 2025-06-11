@@ -25,8 +25,8 @@ export const ShowText = (): React.JSX.Element => {
 
     return (
         <div className='absolute top-0 left-0 w-svw h-full px-4 bg-gray-800 text-white'>
-            <div className='flex h-2/3 py-20 px-10'>
-                <div className="w-1/12">
+            <div className='flex h-full py-20 px-10'>
+                <div className="w-1/12 h-full">
                     <ul className="flex flex-col">
                         <li className="py-1">
                             <a
@@ -69,9 +69,9 @@ export const ShowText = (): React.JSX.Element => {
                         </li>
                     </ul>
                 </div>
-                <div className='w-11/12 px-4'>
+                <div className='w-11/12 h-full px-4'>
                     <div
-                        className='p-10 ms-4 bg-gray-700 rounded-lg relative'
+                        className='h-full p-10 ms-4 overflow-x-hidden overflow-y-scroll bg-gray-700 rounded-lg relative'
                         hidden={(st.showTab !== 0) ? true : false}
                     >
                         <button 
@@ -156,7 +156,7 @@ export const ShowText = (): React.JSX.Element => {
             </div>
             <div
                 className='
-                    w-[120px] py-2 px-4 ms-10 rounded-lg 
+                    absolute bottom-12 w-[120px] py-2 px-4 ms-10 rounded-lg 
                     bg-blue-600 hover:bg-blue-700
                     text-white text-center font-bold
                     cursor-pointer whisper-show-text-button'
